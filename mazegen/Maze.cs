@@ -78,6 +78,67 @@ namespace MazeGenerator
                 }
             }
         }
+        public List<Cell> FindPath(int startX, int startY, int endX, int endY)
+        {
+            List<Cell> path = new List<Cell>();
+            Cell? startCell = GetCell(startX, startY);
+            Cell? endCell = GetCell(endX, endY);
+
+            if (startCell == null || endCell == null)
+            {
+                return path;
+            }
+
+            Queue<Cell> queue = new Queue<Cell>();
+            Dictionary<Cell, Cell?> parentMap = new Dictionary<Cell, Cell?>();
+
+            queue.Enqueue(startCell);
+
+            while (queue.Count > 0)
+            {
+                Cell currentCell = queue.Dequeue();
+
+                if (currentCell == endCell)
+                {
+                    // Found the end cell, reconstruct the path
+                    Cell? pathCell = currentCell;
+                    if (parentMap.ContainsKey(startCell))
+                    {
+                        parentMap[startCell] = null;
+                    }
+                    while (pathCell != null)
+                    {
+                        path.Insert(0, pathCell);
+                        pathCell = parentMap.ContainsKey(pathCell) ? parentMap[pathCell] : null;
+                    }
+                    return path;
+                }
+
+                // Explore the neighbors
+                if (currentCell.LeftNeighbor != null && !parentMap.ContainsKey(currentCell.LeftNeighbor))
+                {
+                    queue.Enqueue(currentCell.LeftNeighbor);
+                    parentMap[currentCell.LeftNeighbor] = currentCell;
+                }
+                if (currentCell.RightNeighbor != null && !parentMap.ContainsKey(currentCell.RightNeighbor))
+                {
+                    queue.Enqueue(currentCell.RightNeighbor);
+                    parentMap[currentCell.RightNeighbor] = currentCell;
+                }
+                if (currentCell.TopNeighbor != null && !parentMap.ContainsKey(currentCell.TopNeighbor))
+                {
+                    queue.Enqueue(currentCell.TopNeighbor);
+                    parentMap[currentCell.TopNeighbor] = currentCell;
+                }
+                if (currentCell.BottomNeighbor != null && !parentMap.ContainsKey(currentCell.BottomNeighbor))
+                {
+                    queue.Enqueue(currentCell.BottomNeighbor);
+                    parentMap[currentCell.BottomNeighbor] = currentCell;
+                }
+            }
+            System.Console.WriteLine("No path found!");
+            return path;
+        }
 
         private void InitializeWalls()
         {
@@ -153,15 +214,27 @@ namespace MazeGenerator
 
     }
 
-    public class Cell(int id, int x, int y)
+    public class Cell
     {
-        public int X { get; set; } = x;
-        public int Y { get; set; } = y;
-        public Cell? TopNeighbor { get; set; } = null;
-        public Cell? RightNeighbor { get; set; } = null;
-        public Cell? BottomNeighbor { get; set; } = null;
-        public Cell? LeftNeighbor { get; set; } = null;
-        public int Id { get; set; } = id;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Cell? TopNeighbor { get; set; }
+        public Cell? RightNeighbor { get; set; }
+        public Cell? BottomNeighbor { get; set; }
+        public Cell? LeftNeighbor { get; set; }
+        public int Id { get; set; }
+
+        public Cell(int id, int x, int y)
+        {
+            X = x;
+            Y = y;
+            Id = id;
+        }
+
+        public override string ToString()
+        {
+            return $"Cell ({X}, {Y})";
+        }
     }
 
     public class Wall(Cell cell1, Cell cell2)
