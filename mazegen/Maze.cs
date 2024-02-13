@@ -5,10 +5,14 @@ namespace MazeGenerator
 {
     public class Maze
     {
+        public readonly int width;
+        public readonly int height;
         private Cell[,] grid;
         private List<Wall> walls = new List<Wall>();
         public Maze(int width, int height)
         {
+            this.width = width;
+            this.height = height;
             grid = new Cell[width, height];
             InitializeCells();
             InitializeWalls();
@@ -237,9 +241,14 @@ namespace MazeGenerator
         }
     }
 
-    public class Wall(Cell cell1, Cell cell2)
+    public class Wall
     {
-        public Cell? Cell1 { get; set; } = cell1;
-        public Cell? Cell2 { get; set; } = cell2;
+        public Wall(Cell cell1, Cell cell2)
+        {
+            Cell1 = cell1;
+            Cell2 = cell2;
+        }
+        public Cell? Cell1 { get; init; }
+        public Cell? Cell2 { get; init; }
     }
 }
