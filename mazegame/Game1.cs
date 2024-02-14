@@ -10,7 +10,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     private GameState _gameState;
-    private Texture2D _tile;
+    private TileSet _tileSet;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -30,7 +30,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _tile = this.Content.Load<Texture2D>("tile");
+        _tileSet = new TileSet(this);
     }
 
     protected override void Update(GameTime gameTime)
@@ -46,7 +46,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        MazeDrawer.drawMaze(_gameState, _spriteBatch, _tile);
+        MazeDrawer.drawMaze(_gameState, _spriteBatch, _tileSet);
         _spriteBatch.End();
 
         base.Draw(gameTime);

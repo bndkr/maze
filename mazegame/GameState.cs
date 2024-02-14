@@ -50,8 +50,10 @@ namespace mazegame
             }
         }
         public bool showBreadcrumbs = false;
-        private Stack<Cell> shortestPath = new Stack<Cell>();
-        public bool showShortestPath = false;
+        public readonly Stack<Cell> shortestPath = new Stack<Cell>();
+        public bool showShortestPath = true;
+
+        public bool showSingleHint = false;
 
         private Maze maze { get; set; }
 
@@ -60,6 +62,16 @@ namespace mazegame
             return maze;
         }
         private int playerX = 0;
+
+        public int getPlayerX()
+        {
+            return playerX;
+        }
         private int playerY = 0;
+
+        public int getPlayerY()
+        {
+            return playerY;
+        }
     }
 }
