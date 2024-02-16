@@ -26,6 +26,12 @@ static class ProcessInput
         { Keys.H, (gameState) => gameState.showSingleHint = !gameState.showSingleHint},
         { Keys.B, (gameState) => gameState.showBreadcrumbs = !gameState.showBreadcrumbs},
         { Keys.P, (gameState) => gameState.showShortestPath = !gameState.showShortestPath},
+        { Keys.F1, (gameState) => gameState.reset(5)},
+        { Keys.F2, (gameState) => gameState.reset(10)},
+        { Keys.F3, (gameState) => gameState.reset(15)},
+        { Keys.F4, (gameState) => gameState.reset(20)},
+        { Keys.F5, (gameState) => gameState.showLeaderboards = !gameState.showLeaderboards},
+        { Keys.F6, (gameState) => gameState.showCredits = !gameState.showCredits},
     };
 
     public static void processInput(GameState gameState)

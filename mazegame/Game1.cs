@@ -11,12 +11,13 @@ public class Game1 : Game
 
     private GameState _gameState;
     private TileSet _tileSet;
+    public static SpriteFont font;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        _graphics.PreferredBackBufferWidth = 800;
-        _graphics.PreferredBackBufferHeight = 600;
+        _graphics.PreferredBackBufferWidth = 1920;
+        _graphics.PreferredBackBufferHeight = 1080;
         _graphics.ApplyChanges();
         IsMouseVisible = true;
     }
@@ -31,6 +32,7 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _tileSet = new TileSet(this);
+        font = Content.Load<SpriteFont>("MyFont");
     }
 
     protected override void Update(GameTime gameTime)
@@ -47,7 +49,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        MazeDrawer.drawMaze(_gameState, _spriteBatch, _tileSet);
+        MazeDrawer.drawMaze(_gameState, _spriteBatch, _tileSet, gameTime, _graphics.GraphicsDevice);
         _spriteBatch.End();
 
         base.Draw(gameTime);

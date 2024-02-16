@@ -140,7 +140,6 @@ namespace MazeGenerator
                     parentMap[currentCell.BottomNeighbor] = currentCell;
                 }
             }
-            System.Console.WriteLine("No path found!");
             return path;
         }
 
